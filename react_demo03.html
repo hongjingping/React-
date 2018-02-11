@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.React表单-可控组件</title>
+  <script src="./CommonJs/react.js"></script>
+  <script src="./CommonJs/react-dom.js"></script>
+  <script src="https://cdn.bootcss.com/babel-core/5.8.38/browser.js"></script>
+</head>
+<body>
+  <div id="demo"></div>
+  <script type="text/babel">
+    var Myform = React.createClass({
+      getInitialState: function () {
+        return {
+          value: 'wikiHong'
+        }
+      },
+      // 可控组件： value必须绑定到state上面，然后实时监控onchange
+      handleChange: function (e) {
+        this.setState({value: e.target.value});
+        console.log(this.state.value);
+      },
+      render: function () {
+        return (
+          <div>
+            <input type="text" value={this.state.value} onChange={this.handleChange}/>
+          </div>
+        )
+      }
+    });
+    ReactDOM.render(
+      <Myform/>, 
+      document.getElementById('demo')
+    );
+  </script>
+</body>
+</html>
