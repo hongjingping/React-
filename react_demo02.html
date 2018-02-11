@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.React表单name复用</title>
+  <script src="./CommonJs/react.js"></script>
+  <script src="./CommonJs/react-dom.js"></script>
+  <script src="https://cdn.bootcss.com/babel-core/5.8.38/browser.js"></script>
+</head>
+<body>
+  <div id="demo"></div>
+  <script type="text/babel">
+    var Myform = React.createClass({
+       // 状态初始化
+       getInitialState: function () {
+        return {
+          userName: 'wikiHong',
+          gender: 'women',
+          checked: true
+        }
+       },
+       // handleChange监控我们的方法
+       handleChange: function (name, event) {
+        var newState = {};
+        // newState[name]=name == 'checked'?event.target.checked: event.target.value;
+        // input或者select中必须加入name属性
+        newState[event.target.name] = event.target.name == 'checked'?event.target.checked: event.target.value;
+        this.setState(newState);
+        console.log(newState);
+       }, 
+      //  
+      submitHandler: function (e) {
+        e.preventDefault();
+        var is = this.state.checked?'是':'不是';
+        var gender = this.state.gender?'女孩':'男孩';
+        alert(this.state.userName + is + gender + '.')
+      },
+       render: function () {
+        return (
+          <form onSubmit={this.submitHandler}>
+            <label htmlFor="userName">请输入您的姓名</label>
+            <input type="text" name="userName" id="userName" value={this.state.userName} onChange={this.handleChange}/>
+            <br/>
+            <label htmlFor="checkbox">是或者否:</label>
+            <input type="checkbox" name="checked" id="checkbox" checked={this.state.checked} onChange={this.handleChange} />
+            <br/>
+            <label htmlFor="checkbox">请选择:</label>
+            <select name="gender" value={this.state.gender} onChange={this.handleChange} >
+              <option value="man">男孩</option>
+              <option value="women">女孩</option>
+            </select>
+            <br/>
+            <button type="submit">提交</button>
+          </form>
+        )
+      }
+    });
+    ReactDOM.render(
+      <Myform/>, 
+      document.getElementById('demo')
+    );
+  </script>
+</body>
+</html>
